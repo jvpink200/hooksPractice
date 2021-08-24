@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import React, { useState }from "react";
 import './App.css';
+// Convert the class below to a functional component that uses the useState hook to initalize a count vartiable to 0 and display the count on the screen.
+// Don't worry about the part where the button changes the count quite yet, that's what you're here to learn about!
 
 function App() {
+  const [ count, setCount ] = useState(0); //setCount is the function that changes the count vale
+  
+  function increment() {
+    setCount(prevCount => prevCount + 1)
+  }
+
+  function decrement() {
+    setCount(prevCount => prevCount -1);
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{count}</h1>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
     </div>
   );
 }
