@@ -1,25 +1,40 @@
 import React, { useState }from "react";
 import './App.css';
-// Convert the class below to a functional component that uses the useState hook to initalize a count vartiable to 0 and display the count on the screen.
-// Don't worry about the part where the button changes the count quite yet, that's what you're here to learn about!
 
 function App() {
-  const [ count, setCount ] = useState(0); //setCount is the function that changes the count vale
-  
-  function increment() {
-    setCount(prevCount => prevCount + 1)
+  const [inputData, setInputData] = useState({ firstName: "", lastName: "" });
+  const [contactsData, setContactsData] = useState([]);
+
+  function handleChange(event) {
+    // update our inputData state
+    setInputData((prevInput) => [...inputData, prevInput]);
+    console.log("input data", inputData);
   }
 
-  function decrement() {
-    setCount(prevCount => prevCount -1);
+  function handleSubmit(event) {
+    // add the inputData to the contactsData array
   }
-  
+
   return (
-    <div className="App">
-      <h1>{count}</h1>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
-    </div>
+    <>
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="First Name"
+          name="firstName"
+          value={inputData.firstName}
+          onChange={handleChange}
+        />
+        <input
+          placeholder="Last Name"
+          name="lastName"
+          value={inputData.lastName}
+          onChange={handleChange}
+        />
+        <br />
+        <button>Add contact</button>
+      </form>
+      {/*{contacts}*/}
+    </>
   );
 }
 
