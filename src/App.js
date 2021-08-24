@@ -1,4 +1,5 @@
-import React, { useState }from "react";
+import React, { useState ,useEffect }from "react"; //useEffect replaces componentDidMount, componentDidUpdate, componentWillUnMount
+//allows use to produce side effects ex: Network request, Manual DOM manipulation, timeouts and intervals
 import './App.css';
 
 function App() {
@@ -6,18 +7,35 @@ function App() {
   const [contactsData, setContactsData] = useState([]);
 
   function handleChange(event) {
-    // update our inputData state
-    setInputData((prevInput) => [...inputData, prevInput]);
-    console.log("input data", inputData);
-  }
+        const {name, value} = event.target
+        setInputData(prevInputData => {
+            return {
+                ...prevInputData,
+                [name]: value
+            }
+        })
+    }
 
   function handleSubmit(event) {
+    event.preventDefault();
     // add the inputData to the contactsData array
+    setContactsData(prevContacts => {
+      return [...prevContacts, inputData]
+    })
   }
 
+  const contacts = contactsData.map(contact => {
+    return (
+      <div key={contact.firstName}>
+        <h2>{contact.firstName}</h2>
+        <p>{contact.lastName}</p>
+      </div>
+    );
+  })
   return (
-    <>
-      <form onSubmit={handleSubmit}>
+    <React.Fragment>
+      <p></p>
+      <form onSubmit={handleSubmit} className="App">
         <input
           placeholder="First Name"
           name="firstName"
@@ -33,8 +51,8 @@ function App() {
         <br />
         <button>Add contact</button>
       </form>
-      {/*{contacts}*/}
-    </>
+      {contacts}
+    </React.Fragment>
   );
 }
 
