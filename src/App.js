@@ -9,27 +9,22 @@ function App() {
   const [ count, setCount ] = useState(0); //setCount is the function that changes the count vale
   const [ color, setColor] = useState("");
 
-  
-  function increment() {
-    setCount(prevCount => prevCount + 1)
-  }
-
-  function decrement() {
-    setCount(prevCount => prevCount -1);
-  }
+  useEffect(()=>{
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + 1)
+    }, 1000) //1000 means every second
+    return () => {
+      clearInterval(intervalId) //will clean up and act like componentDidUnMount
+    }
+  }, [])
 
   useEffect(()=>{
-    setColor(randomColor())
-    setInterval(() =>{
-      console.log("Yo")
-    }, 1000) //1000 means every second
+    setColor(randomColor());
   },[count]) //second thing after comma is what variable to watch if empty the useEffect will never run again
   
   return (
     <div className="App">
       <h1 style={{color: color}}>{count}</h1>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
     </div>
   );
 }
